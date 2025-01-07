@@ -1,9 +1,6 @@
 package org.example.tree;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @SuppressWarnings("rawtypes")
 public class JsonNode {
@@ -60,7 +57,7 @@ public class JsonNode {
         return value;
     }
 
-    public void removeChild(String key) {
-        this.children.remove(key);
+    protected HashMap getChildren() {
+        return children;
     }
 }
