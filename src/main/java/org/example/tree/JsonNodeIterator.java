@@ -4,7 +4,6 @@ import java.util.*;
 
 // Iterate over the JSON tree depth-first.
 public class JsonNodeIterator implements Iterator<JsonNode> {
-    private JsonNode parentNode;
     private JsonNode currentNode;
 
     // A set of child nodes represented by their keys
@@ -12,7 +11,6 @@ public class JsonNodeIterator implements Iterator<JsonNode> {
 
     public JsonNodeIterator(JsonNode rootNode) {
         this.currentNode = rootNode;
-        this.parentNode = rootNode;
         this.nodesToVisit.push(rootNode);
     }
 
@@ -23,6 +21,11 @@ public class JsonNodeIterator implements Iterator<JsonNode> {
 
     @Override
     public JsonNode next() {
+        // Move to the next unvisited node:
+        // If the current node has children, then the next node is the first child.
+        // Otherwise it is a sibling node.
+        currentNode = nodesToVisit.pop();
+
         if (hasNext()) {
             // add children nodes as pending
             for (Object node: currentNode.getChildren().values()) {
@@ -30,10 +33,6 @@ public class JsonNodeIterator implements Iterator<JsonNode> {
             }
         }
 
-        // Move to the next unvisited node:
-        // If the current node has children, then the next node is the first child.
-        // Otherwise it is a sibling node.
-        currentNode = nodesToVisit.pop();
         return currentNode;
     }
 }
