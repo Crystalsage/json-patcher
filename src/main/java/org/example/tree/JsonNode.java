@@ -12,17 +12,19 @@ public class JsonNode {
     JsonNode(String key, Object value) {
         this.key = key;
         this.value = value;
-        this.clazz = value.getClass();
+        this.clazz = value == null ? null : value.getClass();
         this.children = new HashMap<>();
     }
 
     public static JsonNode parseJson(String identifier, Object json) {
-        if (json instanceof HashMap<?, ?> jsonMap) {
+        if (json instanceof Map<?, ?> jsonMap) {
             JsonNode parent = new JsonNode(identifier, json);
 
             for (Object key : jsonMap.keySet()) {
-                if (jsonMap.get(key) instanceof HashMap<?, ?> || jsonMap.get(key) instanceof List<?>) {
-                    parent.putChild(parseJson(key.toString(), jsonMap.get(key)));
+                if (jsonMap.get(key) instanceof Map<?,?> map) {
+                    parent.putChild(parseJson(key.toString(), map));
+                } else if (jsonMap.get(key) instanceof List<?> list) {
+                    parent.putChild(parseJson(key.toString(), list));
                 } else {
                     // primitive
                     parent.putChild(new JsonNode(key.toString(), jsonMap.get(key)));
@@ -30,9 +32,8 @@ public class JsonNode {
             }
             return parent;
         } else if (json instanceof List<?> jsonList) {
-            // list elements have no identifiers
             var jsonElements = jsonList.stream()
-                    .map(e -> parseJson(null, e))
+                    .map(e -> parseJson(String.valueOf(jsonList.indexOf(e)), e))
                     .toList();
             return new JsonNode(identifier, new ArrayList<>(jsonElements));
         } else {

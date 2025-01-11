@@ -4,8 +4,6 @@ import org.example.tree.JsonNode;
 import org.example.tree.JsonPointer;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @SuppressWarnings("unchecked")
 public class Patcher {

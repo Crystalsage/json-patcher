@@ -4,6 +4,7 @@ import java.util.List;
 
 public class JsonPointer {
     private static final String ARRAY_INDEX_LAST = "-";
+
     /*
         params:
         - rootNode : The node we want to traverse.
@@ -11,21 +12,15 @@ public class JsonPointer {
         - required : Is it necessary for the node to exist?
      */
     public static JsonNode derefer(JsonNode rootNode, String pointer, boolean required) {
-        JsonNodeIterator iterator = new JsonNodeIterator(rootNode);
-
-        var tokens = pointer.split("/");
-        for (String token: tokens) {
-            if (!iterator.hasNext() && required) {
-                return null;
+        TraversalResult result = JsonTreeTraverser.traverse(rootNode, pointer);
+        if (!result.getFound()) {
+            if (required) {
+                throw new RuntimeException("Malformed path: Node not found");
             }
-
-            JsonNode currentNode = iterator.next();
-            if (!currentNode.getKey().equals(token) && required) {
-                return null;
-            }
-
-            return currentNode;
+            // If the node was not required, then a new node can be constructed.
+            return new JsonNode(result.getNewKey(), null);
         }
+        return result.getTraversedNode();
     }
 
     public static int getArrayIndex(String pointer, List jsonList) {
