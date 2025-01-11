@@ -3,7 +3,6 @@ package org.example.tree;
 import java.util.List;
 
 public class JsonPointer {
-    private static final String ARRAY_INDEX_LAST = "-";
 
     /*
         params:
@@ -13,25 +12,14 @@ public class JsonPointer {
      */
     public static JsonNode derefer(JsonNode rootNode, String pointer, boolean required) {
         TraversalResult result = JsonTreeTraverser.traverse(rootNode, pointer);
-        if (!result.getFound()) {
-            if (required) {
-                throw new RuntimeException("Malformed path: Node not found");
-            }
-            // If the node was not required, then a new node can be constructed.
-            return new JsonNode(result.getNewKey(), null);
+        if (!result.getFound() && required) {
+            throw new RuntimeException("Malformed path: Node not found");
         }
         return result.getTraversedNode();
     }
 
-    public static int getArrayIndex(String pointer, List jsonList) {
+    public static String getTargetNodeKey(String pointer) {
         var pointers = pointer.split("/");
-        if (pointers[pointers.length - 1].equals(ARRAY_INDEX_LAST)) {
-            return jsonList.size() - 1;
-        }
-        var arrayIndex = Integer.parseInt(pointers[pointers.length - 1]);
-        if (arrayIndex >= jsonList.size()) {
-            throw new RuntimeException("Array index greater than array size");
-        }
-        return arrayIndex;
+        return pointers[pointers.length - 1];
     }
 }

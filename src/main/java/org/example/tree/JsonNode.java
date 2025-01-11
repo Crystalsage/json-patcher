@@ -9,7 +9,7 @@ public class JsonNode {
     Class clazz;
     HashMap<String, JsonNode> children;
 
-    JsonNode(String key, Object value) {
+    public JsonNode(String key, Object value) {
         this.key = key;
         this.value = value;
         this.clazz = value == null ? null : value.getClass();
@@ -56,5 +56,13 @@ public class JsonNode {
 
     public Object getValue() {
         return value;
+    }
+
+    public boolean isNew() {
+        return value == null;
+    }
+
+    public void setValue(JsonNode targetValue) {
+        this.value = targetValue;
     }
 }
