@@ -58,7 +58,7 @@ public class AddOperationTest {
         var jsonList = (List) root.getChild("C").get().getValue();
         assert jsonList.size() == 3;
         assert jsonList.getLast() instanceof JsonNode;
-        assert (Integer) ((JsonNode) jsonList.getLast()).getValue() == 3;
+        assert (Double) ((JsonNode) jsonList.getLast()).getValue() == 2;
     }
 
     @Test

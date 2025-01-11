@@ -58,11 +58,7 @@ public class JsonNode {
         return value;
     }
 
-    public boolean isNew() {
-        return value == null;
-    }
-
-    public void setValue(JsonNode targetValue) {
-        this.value = targetValue;
+    public void removeChild(String targetKey) {
+        this.children.remove(targetKey);
     }
 }

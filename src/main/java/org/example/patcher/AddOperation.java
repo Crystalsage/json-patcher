@@ -39,7 +39,7 @@ public class AddOperation implements PatchOperation {
                 if (index == jsonList.size()) {
                     jsonList.addLast(targetValue);
                 } else {
-                    jsonList.add(index, targetValue);
+                    jsonList.add(index.intValue(), targetValue);
                 }
             }
         }
