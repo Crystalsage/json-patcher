@@ -1,5 +1,6 @@
-package org.example.patcher;
+package org.example.patcher.operations;
 
+import org.example.patcher.Patch;
 import org.example.tree.JsonNode;
 import org.example.tree.JsonPointer;
 
@@ -11,7 +12,7 @@ import static org.example.tree.JsonTreeTraverser.isArrayIndex;
 public class RemoveOperation implements PatchOperation {
     @Override
     public void apply(JsonNode rootNode, Patch patch) {
-        JsonNode targetNode = JsonPointer.derefer(rootNode, patch.path, false);
+        JsonNode targetNode = JsonPointer.derefer(rootNode, patch.path, true);
         String targetKey = JsonPointer.getTargetNodeKey(patch.path);
 
         if (isArrayIndex(targetKey)) {

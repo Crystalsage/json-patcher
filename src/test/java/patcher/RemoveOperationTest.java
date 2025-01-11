@@ -2,8 +2,8 @@ package patcher;
 
 import org.example.Util;
 import org.example.patcher.Patch;
-import org.example.patcher.PatchOperation;
-import org.example.patcher.RemoveOperation;
+import org.example.patcher.operations.PatchOperation;
+import org.example.patcher.operations.RemoveOperation;
 import org.example.tree.JsonNode;
 import org.junit.jupiter.api.Test;
 

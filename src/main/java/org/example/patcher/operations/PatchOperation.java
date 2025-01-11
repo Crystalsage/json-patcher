@@ -1,5 +1,6 @@
-package org.example.patcher;
+package org.example.patcher.operations;
 
+import org.example.patcher.Patch;
 import org.example.tree.JsonNode;
 
 public interface PatchOperation {

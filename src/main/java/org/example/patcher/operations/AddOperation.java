@@ -1,6 +1,6 @@
-package org.example.patcher;
+package org.example.patcher.operations;
 
-import org.example.Util;
+import org.example.patcher.Patch;
 import org.example.tree.*;
 
 import java.util.List;
@@ -31,6 +31,7 @@ public class AddOperation implements PatchOperation {
 
         if (targetNode.getChild(targetKey).isPresent()) {
             targetNode.putChild(new JsonNode(targetKey, targetValue));
+            return;
         }
 
         if (isArrayIndex(targetKey)) {
@@ -42,8 +43,8 @@ public class AddOperation implements PatchOperation {
                     jsonList.add(index.intValue(), targetValue);
                 }
             }
+        } else {
+            targetNode.putChild(targetValue);
         }
-
-        targetNode.putChild(targetValue);
     }
 }
