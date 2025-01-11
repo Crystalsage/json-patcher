@@ -1,10 +1,7 @@
 package org.example;
 
-import com.google.gson.Gson;
 import org.example.tree.JsonNode;
 import org.example.tree.JsonPointer;
-
-import java.util.HashMap;
 
 public class Main {
     private static final String JSON = """

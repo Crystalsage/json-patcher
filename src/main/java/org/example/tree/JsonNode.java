@@ -57,8 +57,4 @@ public class JsonNode {
     public Object getValue() {
         return value;
     }
-
-    protected HashMap getChildren() {
-        return children;
-    }
 }
